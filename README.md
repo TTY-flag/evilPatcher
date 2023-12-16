@@ -2,6 +2,8 @@
 
 ​	最初想法是想找到一种不影响程序本身运行，但是能够给程序禁用一些系统调用（execve、open等）来实现通防的方法。看了网上很多资料，感觉没有找到比较理想的解决方案，有一些是环境都搭不起来，有一些工具对文件本身内容改动太大了（加段），而awd中假如check的脚本是本地运行的话是有可能check文件修改字节数的。那就只能自己动手，丰衣足食了。
 
+
+
 ## 工具说明
 
 ### 特点
@@ -15,6 +17,8 @@
 注：已在ubuntu16、18、20上测试过默认版本gcc编译出的程序，通过；暂不支持g++编译出的程序。
 
 ### 环境需求
+
+​	**默认环境为python3，python2环境请切换至py2分支** https://github.com/TTY-flag/evilPatcher/tree/py2
 
 ​	运行需要依赖seccomps-tools和pwntools
 
@@ -51,8 +55,8 @@ return KILL
 ​	第一个参数是需要patch的elf文件，第二个参数是沙箱规则文件，可以从sandboxs文件夹里选，假如想输出更多的中间过程可以在最后参数加上一个1。（已自动识别32位和64位）
 
 ```
-Usage: python evil_patcher.py elfFile sandboxFile
-       python evil_patcher.py elfFile sandboxFile 1 (more detailed process message)
+Usage: python evilPatcher.py elfFile sandboxFile
+       python evilPatcher.py elfFile sandboxFile 1 (more detailed process message)
 ```
 
 **运行**
