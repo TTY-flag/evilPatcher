@@ -1,5 +1,4 @@
 from pwn import *
-from commands import *
 import sys, os
 
 
@@ -26,7 +25,7 @@ class patch32_handler:
         os.system('chmod +x ' + self.filename + '.patch')
         log.success('input file: ' + self.filename)
         log.success('output file: ' + self.filename + '.patch')
-        print 'Patch file successfully!!!'
+        print("File patched")
 
     def run_partial(self):
         if self.debugFlag == 0:
@@ -34,10 +33,10 @@ class patch32_handler:
         inject_code = asm('endbr32')
         inject_code += asm('push ebp')
         inject_code += self.inject_code_build() + 3 * asm('nop')
-        print '============================inject code into .eh_frame============================'
-        print disasm(inject_code)
-        print '.eh_frame.sh_size===>' + str(hex(self.elf.get_section_by_name('.eh_frame').header.sh_size))
-        print 'inject_code.length===>' + str(hex(len(inject_code)))
+        print('============================inject code into .eh_frame============================')
+        print(disasm(inject_code))
+        print('.eh_frame.sh_size===>') + str(hex(self.elf.get_section_by_name('.eh_frame').header.sh_size))
+        print('inject_code.length===>') + str(hex(len(inject_code)))
         eh_frame_addr = self.elf.get_section_by_name('.eh_frame').header.sh_addr
         self.elf.write(eh_frame_addr, inject_code)
         self.edit_program_table_header()
@@ -47,7 +46,7 @@ class patch32_handler:
         os.system('chmod +x ' + self.filename + '.patch')
         log.success('input file: ' + self.filename)
         log.success('output file: ' + self.filename + '.patch')
-        print 'Patch file successfully!!!'
+        print('Patch file successfully!!!')
 
     def make_sandbox(self, sandboxfile):
         sandboxCt = eval(getoutput('seccomp-tools asm ' + sandboxfile + ' -a i386 -f inspect'))

@@ -1,26 +1,13 @@
-# 基于pwntools和seccomp-tools的awd pwn通防小工具
+# retpatch
 
-​	最初想法是想找到一种不影响程序本身运行，但是能够给程序禁用一些系统调用（execve、open等）来实现通防的方法。看了网上很多资料，感觉没有找到比较理想的解决方案，有一些是环境都搭不起来，有一些工具对文件本身内容改动太大了（加段），而awd中假如check的脚本是本地运行的话是有可能check文件修改字节数的。那就只能自己动手，丰衣足食了。
+One project for awd forked from https://github.com/TTY-flag/evilPatcher
+Since the old program haven't been updated in around a year, I optimized it into Python3 and changed some updated python3 expressions.
 
-## 工具说明
 
-### 特点
+* Replace commands.getoutput() with subprocess.getoutput() for executing shell commands in Python 3.
+* Replace '\x48\x8d\x3d' with b'\x48\x8d\x3d'. In Python 3, strings prefixed with 'b' are considered byte strings. In byte strings, the backslash and following characters (like \x) are not considered escape sequences, they are just part of the byte string.
 
-- 修改的字节数少，0x100字节以下
-- 不修改文件头信息
-- 沙箱规则可以自己定义
-- 支持i386和amd64
-- 支持pie开启和未开启情况
-
-注：已在ubuntu16、18、20上测试过默认版本gcc编译出的程序，通过；暂不支持g++编译出的程序。
-
-### 环境需求
-
-​	运行需要依赖seccomps-tools和pwntools
-
-​	pwntools https://github.com/Gallopsled/pwntools
-
-​	seccomps-tools https://github.com/david942j/seccomp-tools
+*Note: The way to call shellcraft may have changed, you need to modify this part of the code based on the specific pwntools version. For instance, shellcraft.prctl might need to be changed to shellcraft.amd64.prctl.*
 
 ### 目录说明
 
