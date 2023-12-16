@@ -21,8 +21,8 @@ def check():
         sandboxFile = sys.argv[2]
     except IndexError:
         print('Parameter missing...')
-        print('Usage: python3 retpatch.py elfFile sandboxFile')
-        print('       python retpatch.py elfFile sandboxFile 1 (more detailed process message)')
+        print('Usage: python3 evilPatcher.py elfFile sandboxFile')
+        print('       python3 evilPatcher.py elfFile sandboxFile 1 (more detailed process message)')
         exit(0)
 
     # Check filename and sandboxFile
